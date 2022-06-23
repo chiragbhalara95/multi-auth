@@ -70,7 +70,7 @@
                                 @else
                                 class="form-checkbox h-4 w-4"
                                 @endif
-                                name="roles[]"
+                                name="roles"
                                 value="{{$role->id}}"
                                 {!! $user->roles()->first()->name == $role->name ? 'checked' : '' !!}
                               >

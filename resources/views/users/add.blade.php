@@ -56,6 +56,25 @@
                         @enderror
                     </div>
 
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label><span style="color:red;">*</span>Roles</label>
+                        <div class="flex flex-wrap justify-start mb-4">
+                          @foreach ($roles as $role)
+                            <label class="inline-flex items-center mr-6 my-2 text-sm" style="flex: 1 0 20%;">
+                              <input
+                                type="radio"
+                                class="form-checkbox h-4 w-4"
+                                name="roles"
+                                value="{{$role->id}}"
+                              >
+                              <span class="ml-2 {!! $role->assigned && !$role->isRemovable ? 'text-gray-600' : '' !!}">
+                                {{$role->display_name ?? $role->name}}
+                              </span>
+                            </label>
+                          @endforeach
+                        </div>
+                    </div>
+
                 </div>
 
                 {{-- Save Button --}}

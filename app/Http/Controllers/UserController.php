@@ -32,7 +32,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.add');
+        $roles = Role::get();
+        $permissions = Permission::get();
+
+        return view('users.add', compact('roles', 'permissions'));
     }
 
     /**
@@ -64,9 +67,15 @@ class UserController extends Controller
                 return back()->with('error', 'Something went wrong while saving user data');
             }
 
+            $user = user::find($create_user->id);
+            $userRole = Role::find($request->roles);
+            if (!$user->hasRole($userRole->slug)){
+                DB::table('users_roles')->where('user_id', $create_user->id)->delete();
+                $user->roles()->attach($userRole);
+            }
+
             DB::commit();
             return redirect()->route('users.index')->with('success', 'User Stored Successfully.');
-
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -122,7 +131,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email'
         ]);
-        
+
         try {
             DB::beginTransaction();
             // Logic For Save User Data
@@ -136,6 +145,13 @@ class UserController extends Controller
                 DB::rollBack();
 
                 return back()->with('error', 'Something went wrong while update user data');
+            }
+
+            $user = user::find($id);
+            $userRole = Role::find($request->roles);
+            if (!$user->hasRole($userRole->slug)){
+                DB::table('users_roles')->where('user_id', $id)->delete();
+                $user->roles()->attach($userRole);
             }
 
             DB::commit();
