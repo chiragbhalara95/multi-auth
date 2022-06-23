@@ -93,15 +93,15 @@
                               type="checkbox"
                               class="form-checkbox h-4 w-4"
                               name="permissions[]"
-                              value="{{$permission->getKey()}}"
+                              value="{{$permission->id}}"
                               {!! $permission->assigned ? 'checked' : '' !!}
                             >
                             <span class="ml-2">{{$permission->display_name ?? $permission->name}}</span>
                           </label>
                         @endforeach
                       </div>
+                    </div>
                     @endif
-                </div>
 
                 {{-- Save Button --}}
                 <button type="submit" class="btn btn-success btn-user btn-block">

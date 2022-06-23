@@ -75,6 +75,26 @@
                         </div>
                     </div>
 
+                    @if ($permissions)
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label><span style="color:red;">*</span>Permissions</label>
+
+                      <div class="flex flex-wrap justify-start mb-4">
+                        @foreach ($permissions as $permission)
+                          <label class="inline-flex items-center mr-6 my-2 text-sm" style="flex: 1 0 20%;">
+                            <input
+                              type="checkbox"
+                              class="form-checkbox h-4 w-4"
+                              name="permissions[]"
+                              value="{{$permission->getKey()}}"
+                            >
+                            <span class="ml-2">{{$permission->display_name ?? $permission->name}}</span>
+                          </label>
+                        @endforeach
+                      </div>
+                    </div>
+                    @endif
+
                 </div>
 
                 {{-- Save Button --}}

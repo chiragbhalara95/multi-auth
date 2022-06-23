@@ -74,6 +74,14 @@ class UserController extends Controller
                 $user->roles()->attach($userRole);
             }
 
+            $permissions = $request->permissions;
+            if (!empty($permissions)) {
+                foreach($permissions as $permission) {
+                    $permissionObjDetail = Permission::find($permission);
+                    $user->permissions()->attach($permissionObjDetail);
+                }
+            }
+
             DB::commit();
             return redirect()->route('users.index')->with('success', 'User Stored Successfully.');
 
