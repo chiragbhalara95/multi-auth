@@ -27,3 +27,14 @@ Route::group(['middleware' => ['auth','role:developer']], function() {
       
    });
 });
+
+Route::resource('users', UserController::class)->middleware('auth');
+
+
+Route::resource('/permissions', 'PermissionsController', ['as' => 'laratrust'])
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+
+Route::resource('/roles', 'RolesController', ['as' => 'laratrust']);
+
+Route::resource('/roles-assignment', 'RolesAssignmentController', ['as' => 'laratrust'])
+    ->only(['index', 'edit', 'update']);
